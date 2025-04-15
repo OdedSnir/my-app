@@ -13,6 +13,7 @@ function App() {
       <Route path="/" element={<Lobby />} />
       <Route path="/block/:id" element={<CodeBlockPage />} />
       <Route path="/monitor" element={<RoomMonitorPage />} />
+      
     </Routes>
   );
 }

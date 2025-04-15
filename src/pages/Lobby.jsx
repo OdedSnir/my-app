@@ -29,6 +29,7 @@ export default function Lobby() {
           </li>
         ))}
       </ul>
+      <h2 onClick={() => navigate("/monitor")}>Check Out courrent rooms...</h2>
     </div>
   );
 }
