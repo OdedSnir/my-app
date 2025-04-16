@@ -11,6 +11,7 @@ export default function CodeBlockPage() {
   const socketRef = useRef(null);
   const { id } = useParams();
   const [code, setCode] = useState("");
+  const [solution, setSolution] = useState("");
 
   const [isSolved, setIsSolved] = useState(false);
   const navigate = useNavigate();
@@ -28,6 +29,10 @@ export default function CodeBlockPage() {
     socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
+        console.log("recived from server: ", data);
+        if (data.solution !== undefined) {
+          setSolution(data.solution);
+        }
         if (data.type === "finished") {
           console.log("✅ Problem finished:", data.message);
           setIsSolved(true);
@@ -63,7 +68,6 @@ export default function CodeBlockPage() {
   if (!blockData) return <div>Loading...</div>;
 
   const isMentor = blockData.role === "mentor";
-
   return (
     <div>
       <h1>{isMentor ? "Mentor View" : "Student View"}</h1>
@@ -109,6 +113,33 @@ export default function CodeBlockPage() {
           caretColor: "#f8f8f2", // 👈 Makes the cursor visible in dark mode
         }}
       />
+      {isMentor && (
+        <div>
+          <h2>Solution</h2>
+          <Editor
+            value={solution}
+            disabled={isMentor}
+            highlight={(solution) =>
+              Prism.highlight(
+                solution,
+                Prism.languages.javascript,
+                "javascript"
+              )
+            }
+            style={{
+              fontFamily: "monospace",
+              fontSize: 14,
+              backgroundColor: "#2d2d2d", // Matches prism-tomorrow
+              color: "#f8f8f2", // Light text
+              borderRadius: "8px",
+              border: "1px solid #555",
+              height: "300px", // Fixed height
+              overflow: "auto", // Enable scrollbars if needed
+              caretColor: "#f8f8f2", // 👈 Makes the cursor visible in dark mode
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
