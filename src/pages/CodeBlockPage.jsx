@@ -6,21 +6,29 @@ export default function CodeBlockPage() {
   const socketRef = useRef(null);
   const { id } = useParams();
   const [code, setCode] = useState("");
+  const [isSolved, setIsSolved] = useState(false);
 
   const WS_BLOCK_URL = `${import.meta.env.VITE_WS_URL}/${id}`;
+
   useEffect(() => {
     const socket = new WebSocket(WS_BLOCK_URL);
     socketRef.current = socket;
-    socketRef.current = socket;
+
     socket.onopen = () => {
       console.log("WebSocket connection established");
     };
+
     socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        console.log("📩 Received from server:", event.data);
+        console.log("📩 Received from server:", data);
         setBlockData(data);
         setCode(data.code);
+
+        if (typeof data.solved !== "undefined") {
+          console.log("✅ Solved from server:", data.solved);
+          setIsSolved(data.solved);
+        }
       } catch {
         console.log("📩 Received raw code update:", event.data);
         setCode(event.data);
@@ -44,14 +52,24 @@ export default function CodeBlockPage() {
     <div>
       <h1>{isMentor ? "Mentor View" : "Student View"}</h1>
       <h2>{blockData.title}</h2>
+
+      {isSolved && <h1 style={{ color: "green" }}>😁 Solved!</h1>}
+
       <textarea
         value={code}
         onChange={(e) => {
           const newCode = e.target.value;
           console.log("📝 Sending update:", newCode);
-          setCode(newCode);
-          if (!isMentor && socketRef.current?.readyState === WebSocket.OPEN) {
-            socketRef.current?.send(JSON.stringify({ type: "code", code: newCode }));
+
+          if (
+            !isMentor &&
+            socketRef.current?.readyState === WebSocket.OPEN &&
+            !isSolved
+          ) {
+            setCode(newCode);
+            socketRef.current.send(
+              JSON.stringify({ type: "code", code: newCode })
+            );
           }
         }}
         readOnly={isMentor}
