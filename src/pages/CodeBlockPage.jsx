@@ -3,15 +3,15 @@ import { useEffect, useState, useRef } from "react";
 import Editor from "react-simple-code-editor";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript";
-import "prismjs/themes/prism-tomorrow.css"; 
+import "prismjs/themes/prism-tomorrow.css";
 import { useNavigate } from "react-router-dom";
-
 
 export default function CodeBlockPage() {
   const [blockData, setBlockData] = useState(null);
   const socketRef = useRef(null);
   const { id } = useParams();
   const [code, setCode] = useState("");
+
   const [isSolved, setIsSolved] = useState(false);
   const navigate = useNavigate();
 
@@ -68,6 +68,7 @@ export default function CodeBlockPage() {
     <div>
       <h1>{isMentor ? "Mentor View" : "Student View"}</h1>
       <h2>{blockData.title}</h2>
+      <p>🧑‍🤝‍🧑 Students Connected: {blockData.student_count}</p>
 
       {isSolved && (
         <h1 style={{ color: "green" }}>
