@@ -8,7 +8,7 @@ export default function Lobby() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${API_URL}/api/codeblocks`)
+    fetch(`${API_URL}/api/codeblocks/`)
       .then((res) => res.json())
       .then((data) => setBlocks(data));
   }, []);

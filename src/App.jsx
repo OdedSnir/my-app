@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Lobby from "./pages/lobby";
+import Lobby from "./pages/Lobby";
 import CodeBlockPage from "./pages/CodeBlockPage";
 import RoomMonitorPage from "./pages/RoomMonitorPage"; // if you created this
 import "./App.css";
@@ -13,7 +13,6 @@ function App() {
       <Route path="/" element={<Lobby />} />
       <Route path="/block/:id" element={<CodeBlockPage />} />
       <Route path="/monitor" element={<RoomMonitorPage />} />
-      
     </Routes>
   );
 }
