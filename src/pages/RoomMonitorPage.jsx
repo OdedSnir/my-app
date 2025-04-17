@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import RoomData from "../components/RoomData.jsx";
 const WS_URL = import.meta.env.VITE_WS_URL;
-const WS_ROOMDATA_URL = `${WS_URL}/rooms/all`;
+const WS_ROOMDATA_URL = `${WS_URL}/rooms/`;
 
 export default function RoomMonitorPage() {
   const [roomData, setRoomData] = useState([]);
@@ -24,7 +24,6 @@ export default function RoomMonitorPage() {
         console.log("📩 Live rooms update:", data);
         setRoomData(Object.entries(data));
         console.log("🔄 Updating room data:", Object.entries(data));
-
       } catch (err) {
         console.error("❌ Failed to parse room data", err);
       }
