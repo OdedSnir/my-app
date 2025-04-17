@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import RoomData from "../components/RoomData.jsx";
+import  "../components/RoomData.css";
 const WS_URL = import.meta.env.VITE_WS_URL;
 const WS_ROOMDATA_URL = `${WS_URL}/rooms/`;
 
@@ -42,15 +43,17 @@ export default function RoomMonitorPage() {
     <div>
       <h1>Room Monitor</h1>
       <pre style={{ backgroundColor: "#eee", padding: "10px" }}>
-        {roomData.map(([id, data]) => (
-          <RoomData
-            key={id}
-            id={id}
-            studentCount={data.studentCount}
-            code={data.code}
-            solved={data.solved}
-          />
-        ))}
+        <ul>
+          {roomData.map(([id, data]) => (
+            <RoomData
+              key={id}
+              id={id}
+              studentCount={data.student_count}
+              code={data.code}
+              solved={data.solved}
+            />
+          ))}
+        </ul>
       </pre>
       <h2 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
         Back to lobby
