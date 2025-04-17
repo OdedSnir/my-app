@@ -43,7 +43,7 @@ export default function RoomMonitorPage() {
     <div>
       <h1>Room Monitor</h1>
       <pre style={{ backgroundColor: "#eee", padding: "10px" }}>
-        <ul>
+        <ul style={{ listStyle: "none", padding: 0 }} >
           {roomData.map(([id, data]) => (
             <RoomData
               key={id}
