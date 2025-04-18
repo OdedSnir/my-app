@@ -15,7 +15,7 @@ CodeBlocks is a real-time web platform where **mentors** and **students** collab
 
 ## 🚀 Full Deployment Guide via SSH (AWS EC2)
 
-### 🛠️  EC2 Setup
+### 🛠️ EC2 Setup
 
 - Launch an **Ubuntu EC2 instance**
 - Allocate an **Elastic IP**
@@ -48,25 +48,55 @@ Install Node.js & npm (if not installed):
 sudo apt update
 sudo apt install nodejs npm -y
 ```
+
 Update .env file
 
 ```bash
 nano .env
 ```
+
 Paste in:
 VITE_API_URL=http://YOUR_EC2_PUBLIC_IP:8000 || 13.49.146.156 at this time
 VITE_WS_URL=ws://YOUR_EC2_PUBLIC_IP:8000/ws
 
 Install dependencies and build:
+
 ```bash
 npm install
 npm run build
 ```
 
 Serve the frontend:
+
 ```bash
 sudo npm install -g serve
 serve -s dist -l tcp://0.0.0.0:3000
 
 ```
+
+### 🌐 Run the frontend persistently:
+
+```bash
+cd ~/frontend/my-app
+nohup npx serve -s dist -l tcp://0.0.0.0:3000 > frontend.log 2>&1 &
+```
+
+### 🔍 To check if they’re running:
+
+```bash
+ps aux | grep serve
+```
+
+### ❌ To stop them later:
+
+```bash
+ps aux | grep serve
+```
+
+### kill process
+
+```bash
+kill <pid>
+```
+
 ### 💡 Keap in mind tha you nead to run backend to get data...
